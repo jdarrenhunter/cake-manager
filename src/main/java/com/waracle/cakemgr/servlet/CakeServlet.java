@@ -1,22 +1,33 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.servlet;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.waracle.cakemgr.repository.CakeEntity;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.SessionFactory;
 
-import java.io.*;
+import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
 @WebServlet("/cakes")
 public class CakeServlet extends HttpServlet {
+
+    private final SessionFactory sessionFactory;
+
+    public CakeServlet(EntityManagerFactory entityManagerFactory) {
+        this.sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+    }
 
     @Override
     public void init() throws ServletException {
@@ -43,7 +54,7 @@ public class CakeServlet extends HttpServlet {
             }
 
             JsonToken nextToken = parser.nextToken();
-            while(nextToken == JsonToken.START_OBJECT) {
+            while (nextToken == JsonToken.START_OBJECT) {
                 System.out.println("creating cake entity");
 
                 CakeEntity cakeEntity = new CakeEntity();
@@ -56,13 +67,13 @@ public class CakeServlet extends HttpServlet {
                 System.out.println(parser.nextFieldName());
                 cakeEntity.setImage(parser.nextTextValue());
 
-                Session session = HibernateUtil.getSessionFactory().openSession();
+                Session session = sessionFactory.openSession();
                 try {
                     session.beginTransaction();
                     session.persist(cakeEntity);
                     System.out.println("adding cake entity");
                     session.getTransaction().commit();
-                } catch (ConstraintViolationException ex) {
+                } catch (Exception ex) {
 
                 }
                 session.close();
@@ -84,7 +95,7 @@ public class CakeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
 
         resp.getWriter().println("[");

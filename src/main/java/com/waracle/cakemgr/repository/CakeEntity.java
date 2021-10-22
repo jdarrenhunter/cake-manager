@@ -1,8 +1,7 @@
-package com.waracle.cakemgr;
-
-import java.io.Serializable;
+package com.waracle.cakemgr.repository;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
