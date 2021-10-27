@@ -80,8 +80,8 @@ HibernateUtil.java and hibernate.cfg.xml along the way. Finally, added a new con
 serve the root jsp.
 
 3. Implemented the client app and rest resource. 
-- Added integration tests for rest the resource controller and service.
-- Implemented teh rest resource controller and service which meant fleshing out 
+- Added integration tests for the resource controller and service.
+- Implemented the rest resource controller and service which meant fleshing out 
 alot of the implementation driven by writing unit tests. 
 - Removed servlet.
 - Added user interface using thymeleaf templates and a new ui controller.
