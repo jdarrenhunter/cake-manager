@@ -80,14 +80,15 @@ HibernateUtil.java and hibernate.cfg.xml along the way. Finally, added a new con
 serve the root jsp.
 
 3. Implemented the client app and rest resource. 
-- Added integration tests for the resource controller and service.
-- Implemented the rest resource controller and service which meant fleshing out 
-alot of the implementation driven by writing unit tests. 
+- Added integration tests for the cake controller and service using WireMock.
+- Implemented the cake controller and service which meant fleshing out 
+the implementation driven by unit tests. 
 - Removed servlet.
 - Added user interface using thymeleaf templates and a new ui controller.
 - Removed jsps.
-- Added validation and duplicate cake handling, all tested. 
-As part of the implementation, care was taken to separate client from rest resource 
+- Added swagger documentation for the cake controller.
+- Added validation and duplicate cake handling, fully tested.
+- As part of the implementation, care was taken to separate client from rest resource 
 with the view to a complete separation in a future commit.
 
 4. Separation of the client app and rest resource. There are now two projects, a client and a 
