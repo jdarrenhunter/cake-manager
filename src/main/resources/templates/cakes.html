@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cake Manager - management of all things cake</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Cake Manager</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 alert alert-success" th:if="${successMessage != null}" role="alert">
+            <span th:text="${successMessage}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 alert alert-warning" th:if="${errorMessage != null}" role="alert">
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="swagger-ui.html" role="button">Download Cakes Using Swagger Api</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" th:action="@{/}" th:object="${newCake}">
+                <input type="text" placeholder="Title" th:field="*{title}" />
+                <input type="text" placeholder="Description" th:field="*{desc}" />
+                <input type="text" placeholder="Image" th:field="*{image}" />
+                <button class="btn btn-primary" type="submit" role="button">Add Cake</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${cakes.empty}">
+                    <td colspan="2">No Cakes Available</td>
+                </tr>
+                <tr th:each="cake : ${cakes}">
+                    <td><span th:text="${cake.title}">Title</span></td>
+                    <td><span th:text="${cake.desc}">Description</span></td>
+                    <td><img th:src="${cake.image}" alt="Image not available" width="300" height="150"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

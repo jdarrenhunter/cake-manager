@@ -4,9 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Cake", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "TITLE")})
-public class CakeEntity implements Serializable {
+public class CakeDao implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 

@@ -4,13 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@ServletComponentScan(basePackages = "com.waracle.cakemgr.servlet")
+@EnableSwagger2
 public class CakeManagerApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CakeManagerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CakeManagerApplication.class, args);
+    }
 
 }
