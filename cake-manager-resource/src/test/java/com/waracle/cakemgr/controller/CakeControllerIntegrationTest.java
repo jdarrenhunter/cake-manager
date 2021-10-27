@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static com.waracle.cakemgr.fixtures.CakeFixtures.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.skyscreamer.jsonassert.JSONCompareMode.LENIENT;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -90,5 +91,23 @@ class CakeControllerIntegrationTest {
         String expectedMessage = String.format("%s not added because it already exists", bananaCake().getTitle());
         JSONObject expected = new JSONObject().put("message", expectedMessage);
         JSONAssert.assertEquals(expected, actual, LENIENT);
+    }
+
+    @Test
+    public void post_cakes_shouldReturnBadRequestWhenAddingInvalidCake() throws Exception {
+        JSONObject cakeJson = cakeJson("", "desc", "http://image.jpg");
+
+        MvcResult result = mockMvc.perform(
+                        post("/cakes")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(cakeJson.toString())
+                )
+                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
+                .andReturn();
+
+        JSONObject responseBodyJson = new JSONObject(result.getResponse().getContentAsString());
+        String actual = responseBodyJson.getString("message");
+
+        assertThat(actual).contains("Input validation error(s)", "Title.Size");
     }
 }
