@@ -9,10 +9,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class CakeManagerApplication extends SpringBootServletInitializer {
+public class CakeManagerResourceApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(CakeManagerApplication.class, args);
+        SpringApplication.run(CakeManagerResourceApplication.class, args);
     }
 
 }

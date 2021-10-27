@@ -1,0 +1,6 @@
+server:
+  servlet:
+    context-path: /
+  port: 8181
+cake-manager:
+  resource-url: "http://localhost:8282/cakes"

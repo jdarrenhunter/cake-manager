@@ -2,7 +2,6 @@ package com.waracle.cakemgr.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cakemgr.dto.CakeDto;
-import com.waracle.cakemgr.dto.CakeDtoMapper;
 import com.waracle.cakemgr.dto.ErrorDto;
 import com.waracle.cakemgr.service.CakeService;
 import org.springframework.stereotype.Controller;
@@ -12,26 +11,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
-@ApiIgnore
 public class UserInterfaceController {
 
-    @Resource(name="restProxyCakeService")
     private final CakeService cakeService;
-    private final CakeDtoMapper cakeDtoMapper;
     private final ObjectMapper objectMapper;
 
-    public UserInterfaceController(CakeService cakeService, CakeDtoMapper cakeDtoMapper, ObjectMapper objectMapper) {
+    public UserInterfaceController(CakeService cakeService, ObjectMapper objectMapper) {
         this.cakeService = cakeService;
-        this.cakeDtoMapper = cakeDtoMapper;
         this.objectMapper = objectMapper;
     }
 
@@ -44,7 +37,7 @@ public class UserInterfaceController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createCake(@ModelAttribute("newCake") CakeDto cake, Model model) {
-        cakeService.addCake(cakeDtoMapper.toCake(cake));
+        cakeService.addCake(cake);
         model.addAttribute("successMessage",
                 String.format("Cake with Title %s successfully created!", cake.getTitle()));
         return listCakes(model);

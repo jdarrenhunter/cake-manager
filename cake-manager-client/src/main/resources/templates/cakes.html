@@ -22,11 +22,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-primary" href="swagger-ui.html" role="button">Download Cakes Using Swagger Api</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <form method="post" th:action="@{/}" th:object="${newCake}">
                 <input type="text" placeholder="Title" th:field="*{title}" />
                 <input type="text" placeholder="Description" th:field="*{desc}" />

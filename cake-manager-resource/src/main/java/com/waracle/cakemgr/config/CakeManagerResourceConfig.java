@@ -19,22 +19,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
-public class CakeManagerConfig {
+public class CakeManagerResourceConfig {
 
     @Bean
     public CakeClient CakeClient(CakeDtoMapper cakeDtoMapper,
                                  @Value("${cake-manager.data-url}") String cakesUrl,
                                  ObjectMapper objectMapper) {
         return new CakeClient(cakeDtoMapper, cakesUrl, objectMapper);
-    }
-
-    @Bean
-    public WebClient webClient(@Value("${cake-manager.resource-url}") String resourceUrl) {
-        return WebClient
-                .builder()
-                .baseUrl(resourceUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
     }
 
     @Bean
